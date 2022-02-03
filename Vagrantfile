@@ -30,7 +30,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "debian/buster64"
   config.vm.hostname = "umbrel-dev"
   config.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)"
-  config.vm.synced_folder ".", "/home/vagrant", type: "virtualbox"
+  config.vm.synced_folder ".", "/home/vagrant/dev", type: "virtualbox"
 
   # Configure VM resources
   config.vm.provider "virtualbox" do |vb|
@@ -59,7 +59,7 @@ Vagrant.configure(2) do |config|
   # Install Umbrel
   config.vm.provision "shell", inline: <<-SHELL
     apt-get install -y fswatch rsync jq git
-    cd /home/vagrant/getumbrel/umbrel
+    cd /home/vagrant/dev/getumbrel/umbrel
     sudo NETWORK=regtest ./scripts/configure
     docker-compose build --parallel
     docker-compose run dashboard -c yarn
@@ -67,7 +67,7 @@ Vagrant.configure(2) do |config|
 
   # Start Umbrel on boot
   config.vm.provision "shell", run: 'always', inline: <<-SHELL
-    cd /home/vagrant/getumbrel/umbrel
+    cd /home/vagrant/dev/getumbrel/umbrel
     sudo chown -R 1000:1000 .
     chmod -R 700 tor/data/*
     ./scripts/start
