@@ -61,7 +61,7 @@ check_dependencies() {
 
 # Run a command inside the development VM
 run_in_vm() {
-  vagrant ssh -c "cd /vagrant/getumbrel/umbrel && $1"
+  vagrant ssh -c "cd /home/vagrant/dev/getumbrel && $1"
 }
 
 # Get script location and correctly handle any symlinks
